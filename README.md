@@ -23,6 +23,18 @@ Developed a decentralized application using Blockchain which could overcome the 
 - Verify installation: `node --version` and `npm --version`
 - **Note:** For Node.js v17+, you may need to use `--openssl-legacy-provider` flag (already configured in package.json)
 
+### 1.5. Install Python 3.6+ (Required for Native Modules)
+- **Why?** Some npm packages (like `bufferutil`) are native modules that need Python to compile
+- Download from: https://www.python.org/downloads/
+- **IMPORTANT:** During installation, check ✅ **"Add Python to PATH"**
+- Verify: `python --version`
+- **Windows Users:** Also install Windows Build Tools:
+  ```bash
+  npm install --global windows-build-tools
+  ```
+  (Run PowerShell as Administrator)
+- **Troubleshooting:** See `INSTALLATION_TROUBLESHOOTING.md` for detailed solutions
+
 ### 2. Install Ganache (Local Blockchain)
 - Download from: https://www.trufflesuite.com/ganache
 - Choose **Ganache GUI** (recommended for beginners)
@@ -419,6 +431,28 @@ Land-Registry-Application/
 ```
 
 ## Troubleshooting
+
+### Issue: "gyp ERR! find Python" or "Could not find Visual Studio" during npm install
+**Quick Fix:**
+1. Install **Visual Studio Build Tools 2022** (not just Python!):
+   - Download: https://visualstudio.microsoft.com/downloads/
+   - Choose "Build Tools for Visual Studio 2022"
+   - Select ✅ **"Desktop development with C++"** workload
+   - Install and restart computer
+
+2. **If project is in OneDrive** (causes EPERM errors):
+   - Move project outside OneDrive: `C:\Projects\Land-Registry-Application`
+   - Or pause OneDrive sync during installation
+
+3. Clean and retry:
+   ```bash
+   npm cache clean --force
+   rmdir /s /q node_modules
+   npm install
+   ```
+
+**For step-by-step guide:** See `QUICK_FIX_WINDOWS.md`  
+**For detailed solutions:** See `INSTALLATION_TROUBLESHOOTING.md`
 
 ### Issue: "Token contract not deployed to detected network"
 **Solution:**

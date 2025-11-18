@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 var User = require('../Model/User')
 var Govt = require('../Model/Government_Registrar')
+var Bank = require('../Model/Bank')
+var Surveyor = require('../Model/Surveyor')
 var sms = require('../Api/send_sms')
 var mail = require('../Api/send_mail')
 router.post('/signup', async (req, res) => {
@@ -101,6 +103,108 @@ router.post('/send_mail', async (req, res) => {
   mail.send_mail(lemail, message, subject)
   sms.send_sms(number, message)
   res.status(200).send('Mail Sent!')
+})
+
+// Get Pending Banks
+router.get('/pending_banks', async (req, res) => {
+  try {
+    const banks = await Bank.find({ isApproved: false }).sort({ createdAt: -1 })
+    res.status(200).json(banks)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server Error' })
+  }
+})
+
+// Get Pending Surveyors
+router.get('/pending_surveyors', async (req, res) => {
+  try {
+    const surveyors = await Surveyor.find({ isApproved: false }).sort({ createdAt: -1 })
+    res.status(200).json(surveyors)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server Error' })
+  }
+})
+
+// Approve Bank
+router.put('/approve_bank/:id', async (req, res) => {
+  try {
+    const { approvedBy } = req.body
+    const bank = await Bank.findById(req.params.id)
+    
+    if (!bank) {
+      return res.status(404).json({ message: 'Bank not found' })
+    }
+    
+    bank.isApproved = true
+    bank.approvedBy = approvedBy
+    bank.approvedDate = new Date()
+    await bank.save()
+    
+    res.status(200).json({ message: 'Bank approved successfully', bank })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server Error' })
+  }
+})
+
+// Reject Bank
+router.put('/reject_bank/:id', async (req, res) => {
+  try {
+    const bank = await Bank.findById(req.params.id)
+    
+    if (!bank) {
+      return res.status(404).json({ message: 'Bank not found' })
+    }
+    
+    await Bank.findByIdAndDelete(req.params.id)
+    
+    res.status(200).json({ message: 'Bank rejected and removed' })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server Error' })
+  }
+})
+
+// Approve Surveyor
+router.put('/approve_surveyor/:id', async (req, res) => {
+  try {
+    const { approvedBy } = req.body
+    const surveyor = await Surveyor.findById(req.params.id)
+    
+    if (!surveyor) {
+      return res.status(404).json({ message: 'Surveyor not found' })
+    }
+    
+    surveyor.isApproved = true
+    surveyor.approvedBy = approvedBy
+    surveyor.approvedDate = new Date()
+    await surveyor.save()
+    
+    res.status(200).json({ message: 'Surveyor approved successfully', surveyor })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server Error' })
+  }
+})
+
+// Reject Surveyor
+router.put('/reject_surveyor/:id', async (req, res) => {
+  try {
+    const surveyor = await Surveyor.findById(req.params.id)
+    
+    if (!surveyor) {
+      return res.status(404).json({ message: 'Surveyor not found' })
+    }
+    
+    await Surveyor.findByIdAndDelete(req.params.id)
+    
+    res.status(200).json({ message: 'Surveyor rejected and removed' })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server Error' })
+  }
 })
 
 module.exports = router

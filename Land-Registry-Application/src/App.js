@@ -18,6 +18,15 @@ import Dashboard_Govt from './Components/Dashboard_Govt'
 import Profile from './Components/Profile'
 import Help from './Components/Help'
 import Home from './Components/Home'
+// Bank Components
+import Bank_Register from './Components/Bank_Register'
+import Bank_Login from './Components/Bank_Login'
+import Bank_Dashboard from './Components/Bank_Dashboard'
+// Surveyor Components
+import Surveyor_Register from './Components/Surveyor_Register'
+import Surveyor_Login from './Components/Surveyor_Login'
+// Mortgage Components
+import Mortgage_Application from './Components/Mortgage_Application'
 
 class App extends Component {
   constructor(props) {
@@ -77,6 +86,16 @@ class App extends Component {
             />
             <Route exact path="/dashboard_govt" component={Dashboard_Govt} />
             <Route exact path="/guide" component={Help} />
+            {/* Bank Routes */}
+            <Route exact path="/bank_register" component={Bank_Register} />
+            <Route exact path="/bank_login" component={Bank_Login} />
+            <Route exact path="/bank_dashboard" component={Bank_Dashboard} />
+            {/* Surveyor Routes */}
+            <Route exact path="/surveyor_register" component={Surveyor_Register} />
+            <Route exact path="/surveyor_login" component={Surveyor_Login} />
+            {/* Mortgage Routes */}
+            <Route exact path="/mortgage_apply" component={Mortgage_Application} />
+            <Route exact path="/mortgage_apply/:propertyId" component={Mortgage_Application} />
           </Switch>
         </div>
       </Router>

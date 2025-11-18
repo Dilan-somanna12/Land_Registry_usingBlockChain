@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
-import { FiHome, FiLogIn, FiUserPlus, FiUser, FiLogOut, FiGrid, FiHelpCircle, FiShield } from 'react-icons/fi'
+import { FiHome, FiLogIn, FiUserPlus, FiUser, FiLogOut, FiGrid, FiHelpCircle, FiShield, FiBriefcase, FiAward } from 'react-icons/fi'
 import Land from '../abis/LandRegistry.json'
 
 const HeaderContainer = styled(motion.header)`
@@ -237,6 +237,20 @@ class Header extends Component {
                   >
                     <FiShield /> Government
                   </NavButton>
+                  <NavButton
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => window.location = '/bank_login'}
+                  >
+                    <FiBriefcase /> Bank
+                  </NavButton>
+                  <NavButton
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => window.location = '/surveyor_login'}
+                  >
+                    <FiAward /> Surveyor
+                  </NavButton>
                 </>
               )}
 
@@ -245,11 +259,17 @@ class Header extends Component {
                   <NavButton
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => window.location = this.state.userType === 'government' ? '/dashboard_govt' : '/dashboard'}
+                    onClick={() => {
+                      const userType = this.state.userType
+                      if (userType === 'government') window.location = '/dashboard_govt'
+                      else if (userType === 'bank') window.location = '/bank_dashboard'
+                      else if (userType === 'surveyor') window.location = '/surveyor_dashboard'
+                      else window.location = '/dashboard'
+                    }}
                   >
                     <FiGrid /> Dashboard
                   </NavButton>
-                  {this.state.userType !== 'government' && (
+                  {this.state.userType === 'user' && (
                     <NavButton
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -308,15 +328,27 @@ class Header extends Component {
               <MobileNavButton onClick={() => window.location = '/govt_login'}>
                 <FiShield /> Government Login
               </MobileNavButton>
+              <MobileNavButton onClick={() => window.location = '/bank_login'}>
+                <FiBriefcase /> Bank Login
+              </MobileNavButton>
+              <MobileNavButton onClick={() => window.location = '/surveyor_login'}>
+                <FiAward /> Surveyor Login
+              </MobileNavButton>
             </>
           )}
 
           {this.state.authenticated && (
             <>
-              <MobileNavButton onClick={() => window.location = this.state.userType === 'government' ? '/dashboard_govt' : '/dashboard'}>
+              <MobileNavButton onClick={() => {
+                const userType = this.state.userType
+                if (userType === 'government') window.location = '/dashboard_govt'
+                else if (userType === 'bank') window.location = '/bank_dashboard'
+                else if (userType === 'surveyor') window.location = '/surveyor_dashboard'
+                else window.location = '/dashboard'
+              }}>
                 <FiGrid /> Dashboard
               </MobileNavButton>
-              {this.state.userType !== 'government' && (
+              {this.state.userType === 'user' && (
                 <MobileNavButton onClick={() => window.location = '/profile'}>
                   <FiUser /> Profile
                 </MobileNavButton>

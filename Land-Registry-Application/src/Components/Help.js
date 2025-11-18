@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiHelpCircle, FiChevronDown, FiUserPlus, FiHome, FiShoppingCart } from 'react-icons/fi'
+import { FiHelpCircle, FiChevronDown, FiUserPlus, FiHome, FiShoppingCart, FiBriefcase, FiAward, FiShield, FiDollarSign, FiMapPin } from 'react-icons/fi'
 
 const PageContainer = styled.div`
   min-height: 100vh;
-  background: #f8f9fa;
+  background: white;
   padding: 40px 20px;
 `
 
@@ -35,13 +35,18 @@ const IconWrapper = styled(motion.div)`
 const Title = styled.h1`
   font-size: 40px;
   font-weight: 700;
-  color: #1f2937;
+  color: #111827;
   margin-bottom: 12px;
+  
+  @media (max-width: 768px) {
+    font-size: 32px;
+  }
 `
 
 const Subtitle = styled.p`
   font-size: 18px;
-  color: #6b7280;
+  color: #374151;
+  font-weight: 500;
 `
 
 const FAQList = styled.div`
@@ -99,7 +104,7 @@ const QuestionIcon = styled.div`
 const QuestionText = styled.h3`
   font-size: 17px;
   font-weight: 600;
-  color: #1f2937;
+  color: #111827;
   margin: 0;
 `
 
@@ -113,7 +118,8 @@ const FAQAnswer = styled(motion.div)`
   padding: 0 24px 24px 88px;
   color: #4b5563;
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.8;
+  font-weight: 400;
   
   @media (max-width: 768px) {
     padding: 0 24px 24px 24px;
@@ -125,7 +131,13 @@ const FAQAnswer = styled(motion.div)`
     
     li {
       margin: 8px 0;
+      color: #4b5563;
     }
+  }
+  
+  strong {
+    color: #111827;
+    font-weight: 600;
   }
 `
 
@@ -141,14 +153,15 @@ const HelpFooter = styled(motion.div)`
 const FooterTitle = styled.h3`
   font-size: 24px;
   font-weight: 700;
-  color: #1f2937;
+  color: #111827;
   margin-bottom: 12px;
 `
 
 const FooterText = styled.p`
   font-size: 16px;
-  color: #6b7280;
+  color: #4b5563;
   margin-bottom: 24px;
+  font-weight: 400;
 `
 
 const ContactButton = styled.a`
@@ -215,6 +228,104 @@ const faqData = [
         <li>Once approved, complete the transaction using ETH from your wallet</li>
       </ul>
       The smart contract will automatically transfer ownership and funds. The previous owner's ownership will be removed, and you'll receive full ownership rights. You can check your wallet balance in the Profile section.`
+  },
+  {
+    id: 4,
+    icon: FiBriefcase,
+    question: 'How to apply for a bank mortgage?',
+    answer: `To apply for a mortgage loan against your property:
+      <ul>
+        <li>Ensure your property is registered and approved by the government</li>
+        <li>Navigate to your Dashboard and select "Apply for Mortgage"</li>
+        <li>Choose an approved bank from the list</li>
+        <li>Enter loan amount, interest rate, and tenure details</li>
+        <li>Upload required documents (income proof, property documents)</li>
+        <li>Submit your application</li>
+      </ul>
+      The bank will review your application. Once approved, a lien will be placed on your property on the blockchain. You can track your mortgage status and make payments through the dashboard.`
+  },
+  {
+    id: 5,
+    icon: FiAward,
+    question: 'How to request a property survey?',
+    answer: `To request a professional property survey:
+      <ul>
+        <li>Login to your account and go to Dashboard</li>
+        <li>Navigate to "Request Survey" section</li>
+        <li>Select your property and choose survey type (Boundary, Topographic, etc.)</li>
+        <li>Submit your request</li>
+      </ul>
+      The government will assign a certified surveyor to your request. The surveyor will conduct the survey and submit a report. Once verified by the government, the survey report will be linked to your property on the blockchain.`
+  },
+  {
+    id: 6,
+    icon: FiShield,
+    question: 'How do banks register on the platform?',
+    answer: `Banks can register by following these steps:
+      <ul>
+        <li>Visit the Bank Registration page</li>
+        <li>Provide bank details: name, address, license number, contact information</li>
+        <li>Enter admin details: name, email, password</li>
+        <li>Connect MetaMask wallet to get Ethereum address</li>
+        <li>Submit registration form</li>
+      </ul>
+      After registration, the bank account will be pending government approval. Once approved by the government, the bank can login and start accepting mortgage applications.`
+  },
+  {
+    id: 7,
+    icon: FiAward,
+    question: 'How do surveyors register on the platform?',
+    answer: `Surveyors can register by following these steps:
+      <ul>
+        <li>Visit the Surveyor Registration page</li>
+        <li>Provide personal details: name, license number, contact, email</li>
+        <li>Enter specialization and years of experience</li>
+        <li>Connect MetaMask wallet to get Ethereum address</li>
+        <li>Create a password and submit registration</li>
+      </ul>
+      After registration, the surveyor account will be pending government approval. Once approved, surveyors can receive survey assignments from the government and submit reports.`
+  },
+  {
+    id: 8,
+    icon: FiDollarSign,
+    question: 'How does mortgage payment work?',
+    answer: `Mortgage payments are handled through the blockchain:
+      <ul>
+        <li>Navigate to "My Mortgages" in your dashboard</li>
+        <li>Select the active mortgage you want to pay</li>
+        <li>Enter the payment amount in ETH</li>
+        <li>Confirm the transaction in MetaMask</li>
+        <li>The payment is automatically recorded on the blockchain</li>
+      </ul>
+      Payments are directly transferred to the bank. The remaining balance is updated automatically. Once fully paid, the lien on your property will be removed automatically.`
+  },
+  {
+    id: 9,
+    icon: FiMapPin,
+    question: 'What happens if a property has an active mortgage?',
+    answer: `If a property has an active mortgage lien:
+      <ul>
+        <li>The property cannot be sold without bank approval</li>
+        <li>The bank must approve the sale and release the lien</li>
+        <li>If selling, the mortgage amount will be deducted from the sale proceeds</li>
+        <li>The remaining amount goes to the property owner</li>
+        <li>Ownership transfer requires clearing the mortgage first</li>
+      </ul>
+      This ensures that banks' interests are protected while allowing property transactions. The smart contract automatically handles these checks during property transfers.`
+  },
+  {
+    id: 10,
+    icon: FiShield,
+    question: 'What is the role of the government?',
+    answer: `The government plays a crucial role in the platform:
+      <ul>
+        <li><strong>Property Verification:</strong> Reviews and approves property registration applications</li>
+        <li><strong>Bank Approval:</strong> Approves bank registrations before they can operate</li>
+        <li><strong>Surveyor Approval:</strong> Approves surveyor registrations and assigns surveys</li>
+        <li><strong>Survey Verification:</strong> Verifies survey reports submitted by surveyors</li>
+        <li><strong>Registry Integrity:</strong> Maintains the integrity of the land registry system</li>
+      </ul>
+      All approvals are recorded on the blockchain for transparency and immutability.`
   }
 ]
 
