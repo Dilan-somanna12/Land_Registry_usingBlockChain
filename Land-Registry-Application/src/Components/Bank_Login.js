@@ -21,6 +21,12 @@ const FormCard = styled(motion.div)`
   padding: 50px;
   max-width: 480px;
   width: 100%;
+  box-sizing: border-box;
+  
+  @media (max-width: 576px) {
+    padding: 30px 20px;
+    max-width: 100%;
+  }
 `
 
 const Header = styled.div`
@@ -90,6 +96,8 @@ const BadgeText = styled.div`
 
 const InputGroup = styled(motion.div)`
   margin-bottom: 24px;
+  width: 100%;
+  box-sizing: border-box;
 `
 
 const Label = styled.label`
@@ -102,6 +110,8 @@ const Label = styled.label`
 
 const InputWrapper = styled.div`
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 `
 
 const IconContainer = styled.div`
@@ -118,6 +128,7 @@ const IconContainer = styled.div`
 
 const Input = styled.input`
   width: 100%;
+  max-width: 100%;
   padding: 14px 14px 14px 48px;
   border: 2px solid #e5e7eb;
   border-radius: 10px;
@@ -126,6 +137,7 @@ const Input = styled.input`
   background: white;
   color: #1f2937;
   box-sizing: border-box;
+  display: block;
   
   &:focus {
     outline: none;
@@ -313,7 +325,7 @@ class Bank_Login extends Component {
             </ErrorMessage>
           )}
 
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit} style={{ width: '100%', boxSizing: 'border-box' }}>
             <InputGroup
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
